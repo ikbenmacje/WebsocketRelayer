@@ -6,14 +6,25 @@
   </head>
 <body>
 
+
+<h1>websocket - python -osc bridge</h1>
+
+
+<p>
+With the buttons on this page you send messages over websocket to a python script listening to the websocket and passing the recieved messages along as OSC messages to a NodeMCU listening to OSC messages and controlling some leds.
+</p>
+<p>
+    <i>html page -> python script (using flask) -> OSC -> nodeMCU -> LEDS</i>
+</p>
+
+
+<h3>Commands</h3>
+<button type="button" onclick="setRandom()">randomColor</button>
+<br><br>
+
 <h3>Messages</h3>
 <div class="message_holder"></div>
 
-<form action="" method="POST">
-  <input type="text" class="username" placeholder="User Name"/>
-  <input type="text" class="message" placeholder="Messages"/>
-  <input type="submit"/>
-</form>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -43,6 +54,10 @@
         $( 'div.message_holder' ).append( '---</br>' );
     } );
 
+    function setRandom(){
+        socket.emit( 'message_event', "setRandomColor" );
+    }
+
     // handler for the submission form
     var form = $( 'form' );
     form.on( 'submit', function( e )
@@ -59,6 +74,9 @@
         // clear input
         $( 'input.message' ).val( '' ).focus();
     } );
+
+
+
 </script>
 
 </body>
